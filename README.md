@@ -35,7 +35,7 @@ Un onglet *Settings* offre la personnalisation des arguments `yt-dlp`, et un ong
 
 Sous Ubuntu / Debian :
 ```bash
-sudo apt install python3 python3-tk ffmpeg git
+sudo apt install python3 python3-tk ffmpeg git python3-venv
 ```
 
 ### Récupération du code
@@ -54,33 +54,51 @@ python src/netdigger.py
 
 ---
 
+## Build (Linux)
+
+Un script de build est fourni, il utilise un environnement virtuel `.venv-build/` pour compiler avec PyInstaller.
+
+```bash
+scripts/build-linux.sh
+```
+
+Le binaire est produit dans `dist/netdigger-<version>` et un symlink `dist/netdigger` pointe dessus.
+
+---
+
+## Installation utilisateur (menu XFCE / commande globale)
+
+Pour installer Netdigger dans votre session utilisateur (accessible via `netdigger` en terminal et dans le menu XFCE/Whisker) :
+
+```bash
+scripts/install-desktop.sh
+```
+
+Cela :
+- copie le binaire dans `~/.local/bin/netdigger` (assurez-vous que `~/.local/bin` est dans votre PATH)  
+- installe les icônes au bon format dans `~/.local/share/icons/hicolor/...`  
+- crée l’entrée de menu `~/.local/share/applications/netdigger.desktop`  
+
+Redémarrez le panel XFCE si besoin :  
+```bash
+xfce4-panel -r
+```
+
+---
+
 ## Icônes et ressources
 
-- `gfx/netdigger_icon.png` → icône fenêtre (Linux/macOS)  
-- `gfx/netdigger.ico` → icône (Windows)  
+- `gfx/netdigger_icon.png` → icône source  
+- `gfx/netdigger.ico` → icône Windows  
 - `gfx/netdigger_logo.png` → logo affiché dans l’onglet About  
 
 ---
 
 ## Scripts utilitaires
 
-### Build Linux (binaire standalone)
-```bash
-scripts/build-linux.sh
-```
-Produit `dist/netdigger-<version>` et un symlink `dist/netdigger`.
-
-### Installation utilisateur (menu XFCE + commande netdigger)
-```bash
-scripts/install-desktop.sh
-```
-Copie dans `~/.local/bin/netdigger` et crée `~/.local/share/applications/netdigger.desktop`.
-
-### Build Windows (PowerShell)
-```powershell
-scripts/build-windows.ps1
-```
-Produit `dist/netdigger-<version>.exe`.
+- `scripts/build-linux.sh` → build Linux avec PyInstaller  
+- `scripts/install-desktop.sh` → installe le binaire, les icônes et le .desktop utilisateur  
+- `scripts/build-windows.ps1` → build Windows (PowerShell, non encore testé à fond)  
 
 ---
 
@@ -124,6 +142,4 @@ netdigger/
 
 ## Licence
 
-Bootleg Tool License (MIT flavored)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy...
+Bootleg Tool — usage libre mais sans garantie.

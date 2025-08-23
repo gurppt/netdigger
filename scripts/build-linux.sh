@@ -1,30 +1,61 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# --- Localisation du projet ---
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
-VERSION="$(cat VERSION)"
-OUTDIR="$ROOT/dist"
 APPNAME="netdigger"
-BINNAME="$APPNAME-$VERSION"
+VERSION_FILE="$ROOT/VERSION"
+VERSION="dev"
+if [[ -f "$VERSION_FILE" ]]; then
+  VERSION="$(tr -d ' \t\n\r' < "$VERSION_FILE")"
+fi
 
-# Dépendances build (une fois pour toutes)
-python3 -m pip install --user --upgrade pip pyinstaller
+OUTDIR="$ROOT/dist"
+BUILDDIR="$ROOT/build"
+SPECPATH="$ROOT/${APPNAME}.spec"
+VENV="$ROOT/.venv-build"
 
-# Nettoyage
-rm -rf build dist "$APPNAME.spec"
+echo "[i] Version: $VERSION"
+echo "[i] Dossier projet: $ROOT"
 
-# Build one-file, on embarque juste les assets gfx
+# --- Vérifs de base ---
+command -v python3 >/dev/null 2>&1 || { echo "[err] python3 introuvable"; exit 1; }
+
+# --- Crée/valide le venv de build ---
+if [[ ! -d "$VENV" ]]; then
+  echo "[i] Création du venv de build: $VENV"
+  python3 -m venv "$VENV"
+fi
+
+if [[ ! -f "$VENV/bin/activate" ]]; then
+  echo "[err] Fichier d'activation du venv manquant: $VENV/bin/activate"
+  echo "     -> Assure-toi que python3-venv est installé, puis relance."
+  exit 1
+fi
+
+# shellcheck disable=SC1090
+source "$VENV/bin/activate"
+
+python -m pip install --upgrade pip
+python -m pip install pyinstaller
+
+# --- Nettoyage précédent ---
+rm -rf "$BUILDDIR" "$OUTDIR" "$SPECPATH"
+
+# --- Build ---
+echo "[i] Build en cours…"
 pyinstaller \
-  --name "$BINNAME" \
+  --name "${APPNAME}-${VERSION}" \
   --onefile \
   --noconsole \
   --add-data "gfx:gfx" \
   "src/netdigger.py"
 
-# Raccourci "netdigger" => version courante
+# --- Symlink pratique ---
 mkdir -p "$OUTDIR"
-ln -sf "$BINNAME" "$OUTDIR/$APPNAME"
+ln -sfn "${APPNAME}-${VERSION}" "$OUTDIR/${APPNAME}"
 
-echo "Build OK -> $OUTDIR/$BINNAME"
+echo "[ok] Build OK -> $OUTDIR/${APPNAME}-${VERSION}"
+echo "[ok] Raccourci -> $OUTDIR/${APPNAME}"
