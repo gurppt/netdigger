@@ -8,91 +8,85 @@ Un onglet *Settings* offre la personnalisation des arguments `yt-dlp`, et un ong
 
 ## Fonctionnalités
 
-- GUI minimaliste (Tkinter) avec 3 onglets : **Main**, **Settings**, **About**.
-- Téléchargement audio via `yt-dlp`, avec suivi en direct du log.
-- Paramètres audio personnalisables :
-  - Format : WAV, FLAC, OGG (Vorbis).
-  - Sample rate : 44.1 kHz, 48 kHz.
-  - Profondeur : 16 bits, 24 bits.
-  - Canaux : mono / stéréo.
-- Gestion du binaire `yt-dlp` :
-  - Utilisation de la version système (PATH).
-  - Ou d’une **copie locale auto-téléchargeable** (dans `~/.local/share/netdigger/bin`).
-  - Ou d’un chemin personnalisé.
-- Vérification de la version `yt-dlp`.
-- Téléchargement automatique de la dernière release GitHub ou d’une version par *tag*.
-- Affichage de l’aide `yt-dlp -h` intégrée dans l’onglet *Settings*.
-- Icônes/logo (`gfx/`) inclus pour la fenêtre et l’onglet *About*.
+- Interface graphique simple avec 3 onglets : **Main**, **Settings**, **About**  
+- Téléchargement audio via `yt-dlp`, avec suivi en direct du log  
+- Paramètres audio personnalisables :  
+  - Format : WAV, FLAC, OGG (Vorbis)  
+  - Sample rate : 44.1 kHz, 48 kHz  
+  - Profondeur : 16 bits, 24 bits  
+  - Canaux : mono / stéréo  
+- Gestion du binaire `yt-dlp` :  
+  - Utilisation de la version système (PATH)  
+  - Copie locale auto-téléchargeable (dans `~/.local/share/netdigger/bin`)  
+  - Chemin personnalisé  
+- Vérification de la version `yt-dlp` et mise à jour intégrée  
+- Téléchargement automatique de la dernière release GitHub ou d’une version par *tag*  
+- Affichage de l’aide `yt-dlp -h` intégrée  
+- Icônes/logo (`gfx/`) inclus pour la fenêtre et l’onglet *About*  
 
 ---
 
 ## Installation
 
 ### Dépendances système
-
-- **Python 3.10+** (testé avec 3.12).
-- `ffmpeg` (obligatoire pour post-traiter en WAV/FLAC/OGG).
-- Git (si vous clonez le repo).
+- Python 3.10+ (testé avec 3.12)  
+- `ffmpeg` (obligatoire pour post-traiter en WAV/FLAC/OGG)  
+- Git (si vous clonez le repo)  
 
 Sous Ubuntu / Debian :
 ```bash
 sudo apt install python3 python3-tk ffmpeg git
-
----
+```
 
 ### Récupération du code
-git clone https://github.com/<ton-user>/netdigger.git
+```bash
+git clone https://github.com/gurppt/netdigger.git
 cd netdigger
-
-
----
+```
 
 ### Environnement Python
+```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-
 python src/netdigger.py
+```
 
 ---
 
-### Icônes et ressources
-Icônes et ressources
+## Icônes et ressources
 
-gfx/netdigger_icon.png → icône fenêtre (Linux/macOS).
-gfx/netdigger.ico → icône (Windows).
-gfx/netdigger_logo.png → logo affiché dans l’onglet About.
+- `gfx/netdigger_icon.png` → icône fenêtre (Linux/macOS)  
+- `gfx/netdigger.ico` → icône (Windows)  
+- `gfx/netdigger_logo.png` → logo affiché dans l’onglet About  
 
 ---
 
-### Scripts Utilitaires
+## Scripts utilitaires
 
-Build Linux (binaire standalone)
-
+### Build Linux (binaire standalone)
+```bash
 scripts/build-linux.sh
+```
+Produit `dist/netdigger-<version>` et un symlink `dist/netdigger`.
 
-Produit dist/netdigger-<version> et un symlink dist/netdigger.
-
-
-
-Installation utilisateur (menu XFCE + commande netdigger)
-
+### Installation utilisateur (menu XFCE + commande netdigger)
+```bash
 scripts/install-desktop.sh
+```
+Copie dans `~/.local/bin/netdigger` et crée `~/.local/share/applications/netdigger.desktop`.
 
-Copie dans ~/.local/bin/netdigger.
-Crée ~/.local/share/applications/netdigger.desktop.
-
-
-Build Windows (PowerShell)
-
+### Build Windows (PowerShell)
+```powershell
 scripts/build-windows.ps1
-
-Produit dist/netdigger-<version>.exe.
+```
+Produit `dist/netdigger-<version>.exe`.
 
 ---
 
-### Organisation du dépot
+## Organisation du dépôt
 
+```
 netdigger/
 ├── src/
 │   └── netdigger.py          # code source principal
@@ -104,25 +98,32 @@ netdigger/
 ├── requirements.txt
 ├── VERSION
 └── README.md
+```
 
 ---
 
+## Utilisation
 
-### Utilisation :
+### Onglet Main
+- Coller l’URL (YouTube ou autre)  
+- Choisir le dossier de sortie  
+- Cliquer **Download**  
+- Suivre le log dans la zone Verbose  
 
+### Onglet Settings
+- Choisir la source `yt-dlp` (System / Local / Custom)  
+- Gérer le téléchargement/MAJ de `yt-dlp`  
+- Régler format, sample rate, bit depth, canaux  
+- Ajouter des arguments personnalisés si besoin (`--cookies-from-browser firefox`, etc.)  
+- Consulter l’aide intégrée (`yt-dlp -h`)  
 
-Onglet Main :
-Coller l’URL (YouTube ou autre).
-Choisir le dossier de sortie.
-Cliquer Download.
-Suivre le log dans la zone Verbose.
+### Onglet About
+- Affiche le logo et les infos développeur  
 
-Onglet Settings :
-Choisir source yt-dlp (System / Local / Custom).
-Gérer le téléchargement/MAJ de yt-dlp.
-Régler format, sample rate, bit depth, canaux.
-Ajouter des arguments personnalisés si besoin (--cookies-from-browser firefox, etc.).
-Consulter l’aide intégrée (yt-dlp -h).
+---
 
-Onglet About :
-Affiche le logo + infos développeur.
+## Licence
+
+Bootleg Tool License (MIT flavored)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy...
