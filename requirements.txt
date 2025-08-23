@@ -1,2 +1,10 @@
+# Dépendances Python pour Netdigger
 
-yt-dlp
+# yt-dlp : nécessaire si tu veux aussi l'utiliser en ligne de commande
+# (l'application Netdigger peut télécharger une copie locale automatiquement)
+yt-dlp>=2025.01.01
+
+# Tkinter est utilisé pour l'interface graphique
+# Attention : il n’est généralement pas installable via pip,
+# il faut installer le paquet système (ex: sudo apt install python3-tk sous Debian/Ubuntu).
+# tkinter
