@@ -1,4 +1,6 @@
 # Netdigger
+<img width="450" height="231" alt="netdigger_logo" src="https://github.com/user-attachments/assets/f231e143-dde5-4b83-8715-1a0ce598a52d" />
+
 
 **Netdigger** est une petite application graphique (Tkinter) pour extraire l’audio de vidéos (YouTube, etc.) en utilisant [`yt-dlp`](https://github.com/yt-dlp/yt-dlp).  
 Elle permet de télécharger directement en **WAV**, **FLAC**, ou **OGG**, avec un choix de fréquence d’échantillonnage, profondeur de bits et canaux.  
